@@ -10,10 +10,18 @@
 
 #define TRUE 1
 #define FALSE 0
+#define NBR_CMD 2
+
+typedef enum e_hash_type
+{
+    NONE = 0,
+    MD5,
+    SHA256,
+} t_hash_type;
 
 typedef enum e_access_type
 {
-    FILES,
+    FILES = 0,
     STRING,
 } t_access_type;
 
@@ -44,5 +52,18 @@ typedef union s_opt
     t_opt_md5 md5;
     t_opt_sha256 sha256;
 } t_opt;
+
+typedef struct s_env
+{
+    t_hash_type hash_type;
+    t_opt opt;
+} t_env;
+
+// opt.c
+void display_binary_help();
+void display_command_help();
+void parse_command(t_hash_type *type, char const *str);
+void parse_opt_args_md5(uint64_t argc, char const **argv, t_opt *opt);
+void parse_opt_args_sha256(uint64_t argc, char const **argv, t_opt *opt);
 
 #endif

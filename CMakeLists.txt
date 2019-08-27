@@ -4,7 +4,9 @@ project(ft_ssl_md5)
 #Setup binary compilation
 add_executable(ft_ssl
 		srcs/ft_ssl.c
-		srcs/container.c srcs/t_list.c)
+		srcs/ft_queue.c
+		srcs/t_list.c
+		srcs/opt.c)
 target_include_directories(ft_ssl PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/includes)
 target_compile_options(ft_ssl PRIVATE -Wall -Wextra -Werror -std=gnu11 -march=native -flto)
