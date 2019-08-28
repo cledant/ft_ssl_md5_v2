@@ -31,5 +31,6 @@ void t_queue_push_back(t_queue *queue, void *data);
 void t_queue_push_front(t_queue *queue, void *data);
 void *t_queue_pop_front(t_queue *queue);
 void *t_queue_pop_back(t_queue *queue);
+void t_queue_foreach(t_queue *queue, void (*func)(void *, void *), void *data);
 
 #endif

@@ -53,7 +53,9 @@ t_queue_push_back(t_queue *queue, void *data)
     }
     new_data->data = data;
     new_data->prev = queue->end;
-    queue->end->next = new_data;
+    if (queue->end) {
+        queue->end->next = new_data;
+    }
     queue->end = new_data;
     if (!queue->begin) {
         queue->begin = new_data;
@@ -71,7 +73,9 @@ t_queue_push_front(t_queue *queue, void *data)
     }
     new_data->data = data;
     new_data->next = queue->begin;
-    queue->begin->prev = new_data;
+    if (queue->begin) {
+        queue->begin->prev = new_data;
+    }
     queue->begin = new_data;
     if (!queue->end) {
         queue->end = new_data;
@@ -119,4 +123,13 @@ t_queue_pop_back(t_queue *queue)
     free(to_delete);
     --queue->size;
     return (data);
+}
+
+void
+t_queue_foreach(t_queue *queue, void (*func)(void *, void *), void *data)
+{
+    while (queue->begin) {
+        (*func)(queue->begin->data, data);
+        queue->begin = queue->begin->next;
+    }
 }
