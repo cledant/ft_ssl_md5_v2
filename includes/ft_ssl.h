@@ -8,8 +8,6 @@
 
 #include "container.h"
 
-#define TRUE 1
-#define FALSE 0
 #define NBR_CMD 2
 
 typedef enum e_hash_type
@@ -71,7 +69,14 @@ void display_md5_help();
 void display_sha256_help();
 
 // opt_md5.c
+void clean_exit_md5(t_opt_md5 *opt, char const *str);
 void parse_opt_args_md5(int32_t argc, char const **argv, t_opt *opt);
+
+// process_md5.c
+void process_md5(t_opt *opt);
+
+// process_sha256.c
+void process_sha256(t_opt *opt);
 
 // opt_sha256.c
 void parse_opt_args_sha256(int32_t argc, char const **argv, t_opt *opt);

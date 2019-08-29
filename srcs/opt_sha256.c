@@ -6,6 +6,5 @@ parse_opt_args_sha256(int32_t argc, char const **argv, t_opt *opt)
     (void)argc;
     (void)argv;
     (void)opt;
-    puts("TODO sha256");
-    display_sha256_help();
+    puts("TODO opt sha256");
 }

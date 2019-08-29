@@ -17,9 +17,11 @@ int
 main(int argc, char const **argv)
 {
     t_env e = { 0, { { 0 } } };
-    static void (*func[NBR_CMD])(int32_t, char const **, t_opt *) = {
+    static void (*parse_func[NBR_CMD])(int32_t, char const **, t_opt *) = {
         parse_opt_args_md5, parse_opt_args_sha256
     };
+    static void (*process_func[NBR_CMD])(t_opt *) = { process_md5,
+                                                      process_sha256 };
 
     if (argc < 2) {
         display_binary_help();
@@ -31,7 +33,7 @@ main(int argc, char const **argv)
         display_command_help();
         return (1);
     }
-    (*func[e.hash_type - 1])(argc, argv, &e.opt);
-    debug_print_args(&e);
+    (*parse_func[e.hash_type - 1])(argc, argv, &e.opt);
+    (*process_func[e.hash_type - 1])(&e.opt);
     return (0);
 }
