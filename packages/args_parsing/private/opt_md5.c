@@ -1,6 +1,7 @@
-#include "ft_ssl.h"
+#include "args_parsing.h"
+#include "args_parsing_impl.h"
 
-void
+static void
 clean_exit_md5(t_opt_md5 *opt, char const *str)
 {
     if (str) {

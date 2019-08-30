@@ -2,11 +2,6 @@
 #define CONTAINER_H
 
 #include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define T_STRING_DEFAULT_SIZE 32
-#define T_STRING_INCREMENT_SIZE 128
 
 #define TRUE 1
 #define FALSE 0

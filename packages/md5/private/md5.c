@@ -1,20 +1,5 @@
-#ifndef MD5_H
-#define MD5_H
-
-#include <stdint.h>
-
-#include "container.h"
-
-#define MD5_CHUNK_SIZE 64
-#define MD5_CHUNK_UINT_TAB_SIZE 16
-#define MD5_MAX_LAST_CHUNK 55
-#define MD5_APPEND_BIT 0x80
-
-typedef struct s_md5_const
-{
-    uint32_t s[64];
-    uint32_t k[64];
-} t_md5_const;
+#include "md5.h"
+#include "md5_impl.h"
 
 t_md5_const const g_md5_constants = {
     { 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
@@ -34,22 +19,11 @@ t_md5_const const g_md5_constants = {
       0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391 }
 };
 
-typedef struct s_md5_digest
+t_string const *
+md5_get_hash(int32_t fd, char const *str, t_string_chunk *string_chunk)
 {
-    uint32_t a;
-    uint32_t b;
-    uint32_t c;
-    uint32_t d;
-} t_md5_digest;
-
-typedef struct s_md5_chunk
-{
-    uint32_t sub_chunk[MD5_CHUNK_UINT_TAB_SIZE];
-} t_md5_chunk;
-
-t_string *md5_get_hash(int32_t fd,
-                       char const *str,
-                       t_string_chunk *string_chunk);
-void md5_process_chunk(t_md5_digest *digest, t_md5_chunk const *chunk);
-
-#endif
+    (void)fd;
+    (void)str;
+    (void)string_chunk;
+    return (NULL);
+}

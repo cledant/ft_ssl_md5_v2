@@ -1,17 +1,5 @@
-#include "ft_ssl.h"
-
-void
-display_binary_help()
-{
-    puts("Usage: ft_ssl command [command options] [command args]\n\tAvailable "
-         "commands:\n\t\tmd5\n\t\tsha256");
-}
-
-void
-display_command_help()
-{
-    puts("Available commands:\n\nMessage digest commands:\nmd5\nsha256");
-}
+#include "args_parsing.h"
+#include "args_parsing_impl.h"
 
 void
 display_md5_help()
