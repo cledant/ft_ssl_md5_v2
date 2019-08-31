@@ -47,6 +47,9 @@ t_queue_get_size(t_queue *queue)
 void
 t_queue_push_back(t_queue *queue, void *data)
 {
+    if (!data) {
+        return ;
+    }
     t_list *new_data = t_list_new();
 
     if (!new_data) {
@@ -67,6 +70,9 @@ t_queue_push_back(t_queue *queue, void *data)
 void
 t_queue_push_front(t_queue *queue, void *data)
 {
+    if (!data) {
+        return ;
+    }
     t_list *new_data = t_list_new();
 
     if (!new_data) {

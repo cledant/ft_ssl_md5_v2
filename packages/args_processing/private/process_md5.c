@@ -7,8 +7,11 @@ print_hash_md5(t_opt_md5 const *opt,
                t_string const *s)
 {
     (void)opt;
-    (void)s;
-    printf("MD5 (%s) = %s\n", source, "TODO Things");
+    if (s) {
+        printf("MD5 (%s) = %s\n", source, s->str);
+    } else {
+        printf("MD5 (%s) = %s\n", source, "TODO Things");
+    }
 }
 
 void
@@ -35,6 +38,7 @@ process_md5(t_opt *opt)
                 break;
         }
         free(in);
+        t_string_delete((t_string *)hash, TRUE);
     }
     t_queue_delete(ptr->queue);
 }

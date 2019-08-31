@@ -2,8 +2,11 @@
 #define MD5_IMPL_H
 
 #include <stddef.h>
+#include <string.h>
+#include <stdio.h>
 
 #define MD5_CHUNK_SIZE 64
+#define MD5_HASH_SIZE 32
 #define MD5_CHUNK_UINT_TAB_SIZE 16
 #define MD5_MAX_LAST_CHUNK 55
 #define MD5_APPEND_BIT 0x80
@@ -34,6 +37,9 @@ typedef struct s_md5_chunk
     uint32_t sub_chunk[MD5_CHUNK_UINT_TAB_SIZE];
 } t_md5_chunk;
 
-void md5_process_chunk(t_md5_digest *digest, t_md5_chunk const *chunk);
+// md5.c
+t_string *md5_digest_to_string(t_md5_digest *digest);
+void md5_compute_digest_from_str(t_md5_digest *digest, char const *str);
+void md5_compute_chunk(t_md5_digest *digest, t_md5_chunk const *chunk);
 
 #endif

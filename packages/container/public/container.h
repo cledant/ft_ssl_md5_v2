@@ -39,14 +39,14 @@ typedef struct s_string_chunk
 t_string *t_string_new(char const *str);
 t_string *t_string_sized_new(uint64_t default_len);
 char *t_string_delete(t_string *string, t_bool delete_str);
-uint64_t t_string_get_len(t_string *string);
-uint64_t t_string_get_allocated_len(t_string *string);
+void t_string_clear(t_string *string);
 t_string *t_string_append(t_string *string, char const *str);
 t_string *t_string_append_len(t_string *string, char const *str, uint64_t len);
+uint64_t t_string_get_free_space(t_string *string);
 
 // t_string_chunk.c
 t_string_chunk *t_string_chunk_new(uint64_t len);
-void t_string_chunk_delete();
+void t_string_chunk_delete(t_string_chunk *string_chunk);
 void t_string_chunk_append(t_string_chunk *string_chunk, char const *str);
 
 // t_list.c

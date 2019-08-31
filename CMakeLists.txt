@@ -13,7 +13,9 @@ add_executable(ft_ssl
 		packages/args_parsing/private/display.c
 		packages/args_parsing/private/utility.c
 		packages/args_processing/private/process_md5.c
-		packages/args_processing/private/process_sha256.c)
+		packages/args_processing/private/process_sha256.c
+		packages/container/private/t_string.c
+		packages/container/private/t_string_chunk.c)
 target_include_directories(ft_ssl PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/shared_types/public
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/binary/private
