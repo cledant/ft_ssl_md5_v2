@@ -29,6 +29,13 @@ typedef struct s_string
     uint64_t allocated_len;
 } t_string;
 
+typedef struct s_byte_array
+{
+    uint8_t *data;
+    uint64_t len;
+    uint64_t allocated_len;
+} t_byte_array;
+
 typedef struct s_string_chunk
 {
     t_queue *queue;
@@ -38,16 +45,36 @@ typedef struct s_string_chunk
 // t_string.c
 t_string *t_string_new(char const *str);
 t_string *t_string_sized_new(uint64_t default_len);
+void t_string_init(t_string *string, char *buff, uint64_t buff_size);
 char *t_string_delete(t_string *string, t_bool delete_str);
 void t_string_clear(t_string *string);
 t_string *t_string_append(t_string *string, char const *str);
 t_string *t_string_append_len(t_string *string, char const *str, uint64_t len);
+t_string *t_string_append_no_resize(t_string *string,
+                                    char const *str,
+                                    uint64_t *appended_len);
 uint64_t t_string_get_free_space(t_string *string);
 
 // t_string_chunk.c
 t_string_chunk *t_string_chunk_new(uint64_t len);
 void t_string_chunk_delete(t_string_chunk *string_chunk);
 void t_string_chunk_append(t_string_chunk *string_chunk, char const *str);
+
+// t_byte_array.c
+t_byte_array *t_byte_array_new(uint64_t default_len);
+void t_byte_array_init(t_byte_array *byte_array,
+                       uint8_t *array,
+                       uint64_t array_size);
+uint8_t *t_byte_array_delete(t_byte_array *byte_array, t_bool delete_str);
+void t_byte_array_clear(t_byte_array *byte_array);
+t_byte_array *t_byte_array_append(t_byte_array *byte_array,
+                                  uint8_t const *array,
+                                  uint64_t len);
+t_byte_array *t_byte_array_append_no_resize(t_byte_array *byte_array,
+                                            uint8_t const *array,
+                                            uint64_t len,
+                                            uint64_t *appended_len);
+uint64_t t_byte_array_get_free_space(t_byte_array *byte_array);
 
 // t_list.c
 t_list *t_list_new();

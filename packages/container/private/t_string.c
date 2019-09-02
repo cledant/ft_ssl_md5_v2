@@ -36,6 +36,9 @@ t_string_sized_new(uint64_t default_len)
     if (!ptr) {
         return (NULL);
     }
+    if (!default_len) {
+        default_len = T_STRING_DEFAULT_SIZE;
+    }
     memset(ptr, 0, sizeof(t_string));
     ptr->str = (char *)malloc(sizeof(char) * (default_len + 1));
     if (!ptr->str) {
@@ -46,6 +49,15 @@ t_string_sized_new(uint64_t default_len)
     ptr->len = 0;
     ptr->allocated_len = default_len;
     return (ptr);
+}
+
+void
+t_string_init(t_string *string, char *buff, uint64_t buff_size)
+{
+    string->str = buff;
+    string->len = 0;
+    string->allocated_len = buff_size;
+    memset(string->str, 0, string->allocated_len + 1);
 }
 
 char *
@@ -65,7 +77,7 @@ void
 t_string_clear(t_string *string)
 {
     string->len = 0;
-    memset(string->str, 0, sizeof(char) * string->allocated_len);
+    memset(string->str, 0, sizeof(char) * string->allocated_len + 1);
 }
 
 t_string *
@@ -120,6 +132,28 @@ t_string_append_len(t_string *string, char const *str, uint64_t len)
     }
     strncat(string->str, str, len);
     string->len += len;
+    return (string);
+}
+
+t_string *
+t_string_append_no_resize(t_string *string,
+                          char const *str,
+                          uint64_t *appended_len)
+{
+    uint64_t to_cpy = strlen(str);
+
+    if (!to_cpy) {
+        return (string);
+    }
+    uint64_t free_space = string->allocated_len - string->len;
+    if (free_space < to_cpy) {
+        to_cpy = free_space;
+    }
+    strncat(string->str, str, to_cpy);
+    string->len += to_cpy;
+    if (appended_len) {
+        *appended_len = to_cpy;
+    }
     return (string);
 }
 
