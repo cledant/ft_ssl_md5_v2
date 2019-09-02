@@ -36,12 +36,6 @@ typedef struct s_byte_array
     uint64_t allocated_len;
 } t_byte_array;
 
-typedef struct s_string_chunk
-{
-    t_queue *queue;
-    uint64_t chunk_size;
-} t_string_chunk;
-
 // t_string.c
 t_string *t_string_new(char const *str);
 t_string *t_string_sized_new(uint64_t default_len);
@@ -55,13 +49,9 @@ t_string *t_string_append_no_resize(t_string *string,
                                     uint64_t *appended_len);
 uint64_t t_string_get_free_space(t_string *string);
 
-// t_string_chunk.c
-t_string_chunk *t_string_chunk_new(uint64_t len);
-void t_string_chunk_delete(t_string_chunk *string_chunk);
-void t_string_chunk_append(t_string_chunk *string_chunk, char const *str);
-
 // t_byte_array.c
 t_byte_array *t_byte_array_new(uint64_t default_len);
+t_byte_array *t_byte_array_copy(t_byte_array *src);
 void t_byte_array_init(t_byte_array *byte_array,
                        uint8_t *array,
                        uint64_t array_size);

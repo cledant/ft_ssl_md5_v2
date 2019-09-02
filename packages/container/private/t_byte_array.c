@@ -24,6 +24,24 @@ t_byte_array_new(uint64_t default_len)
     return (ptr);
 }
 
+t_byte_array *
+t_byte_array_copy(t_byte_array *src)
+{
+    t_byte_array *ptr = (t_byte_array *)malloc(sizeof(t_byte_array));
+
+    if (!ptr) {
+        return (NULL);
+    }
+    ptr->allocated_len = src->allocated_len;
+    ptr->len = src->len;
+    if (!(ptr->data = (void *)malloc(src->allocated_len))) {
+        free(ptr);
+        return (NULL);
+    }
+    memcpy(ptr->data, src->data, src->len);
+    return (ptr);
+}
+
 void
 t_byte_array_init(t_byte_array *byte_array, uint8_t *array, uint64_t array_size)
 {

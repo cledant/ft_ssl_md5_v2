@@ -38,12 +38,11 @@ typedef struct s_md5_chunk
     uint32_t sub_chunk[MD5_CHUNK_UINT_TAB_SIZE];
 } t_md5_chunk;
 
-// md5.c
+// md5_compute.c
 void md5_compute_digest_from_fd(t_md5_digest *digest,
                                 int32_t fd,
-                                t_string_chunk *string_chunk);
+                                t_queue *string_chunk);
 void md5_compute_digest_from_str(t_md5_digest *digest, uint8_t const *str);
-void md5_compute_chunk(t_md5_digest *digest, t_md5_chunk const *chunk);
 
 // md5_utility.c
 t_string *md5_digest_to_string(t_md5_digest *digest);

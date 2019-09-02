@@ -12,14 +12,21 @@ process_exit_md5(t_input *in, t_queue *queue)
 t_bool
 process_md5_stdin(t_opt_md5 const *opt)
 {
-    t_string const *hash = md5_get_hash(0, NULL, NULL);
+    t_queue *queue = NULL;
+
+    if (opt->echo) {
+        queue = t_queue_new();
+    }
+    t_string const *hash = md5_get_hash(0, NULL, queue);
 
     if (!hash) {
         puts("ft_ssl: failed to alloc memory");
         return (TRUE);
     }
     if (opt->echo) {
-        puts("TODO ECHO STDIN");
+        if (queue) {
+            t_queue_foreach(queue, md5_display_string_chunk, NULL);
+        }
     }
     puts(hash->str);
     t_string_delete((t_string *)hash, TRUE);
