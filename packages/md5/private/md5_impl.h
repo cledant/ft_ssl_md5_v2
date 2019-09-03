@@ -23,8 +23,6 @@ typedef struct s_md5_const
     uint32_t k[64];
 } t_md5_const;
 
-extern t_md5_const const g_md5_constants;
-
 typedef struct s_md5_digest
 {
     uint32_t a;
@@ -45,6 +43,7 @@ void md5_compute_digest_from_fd(t_md5_digest *digest,
 void md5_compute_digest_from_str(t_md5_digest *digest, uint8_t const *str);
 
 // md5_utility.c
+extern t_md5_const const g_md5_constants;
 t_string *md5_digest_to_string(t_md5_digest *digest);
 
 #endif

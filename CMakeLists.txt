@@ -17,7 +17,13 @@ add_executable(ft_ssl
 		packages/container/private/t_string.c
 		packages/md5/private/md5_utility.c
 		packages/container/private/t_byte_array.c
-		packages/md5/private/md5_compute.c)
+		packages/md5/private/md5_compute.c
+		packages/args_processing/private/utility.c
+		packages/sha256/private/sha256.c
+		packages/container/private/endianness.c
+		packages/sha256/private/sha256_utility.c
+		packages/container/private/rotate_data.c
+		packages/sha256/private/sha256_compute.c)
 target_include_directories(ft_ssl PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/shared_types/public
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/binary/private
@@ -28,5 +34,7 @@ target_include_directories(ft_ssl PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/container/public
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/container/private
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/md5/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/md5/private)
+		${CMAKE_CURRENT_SOURCE_DIR}/packages/md5/private
+		${CMAKE_CURRENT_SOURCE_DIR}/packages/sha256/public
+		${CMAKE_CURRENT_SOURCE_DIR}/packages/sha256/private)
 target_compile_options(ft_ssl PRIVATE -Wall -Wextra -Werror -std=gnu11 -march=native -flto)

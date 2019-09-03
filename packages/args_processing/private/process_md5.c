@@ -9,9 +9,10 @@ process_exit_md5(t_input *in, t_queue *queue)
     exit(-1);
 }
 
-t_bool
-process_md5_stdin(t_opt_md5 const *opt)
+static t_bool
+process_md5_stdin(char const *unused, t_opt_md5 const *opt)
 {
+    (void)unused;
     t_queue *queue = NULL;
 
     if (opt->echo) {
@@ -25,7 +26,7 @@ process_md5_stdin(t_opt_md5 const *opt)
     }
     if (opt->echo) {
         if (queue) {
-            t_queue_foreach(queue, md5_display_string_chunk, NULL);
+            t_queue_foreach(queue, display_string_chunk, NULL);
         }
     }
     puts(hash->str);
@@ -33,7 +34,7 @@ process_md5_stdin(t_opt_md5 const *opt)
     return (FALSE);
 }
 
-t_bool
+static t_bool
 process_md5_file(char const *filesname, t_opt_md5 const *opt)
 {
     int32_t fd = open(filesname, O_RDONLY);
@@ -83,26 +84,15 @@ void
 process_md5(t_opt *opt)
 {
     t_opt_md5 *ptr = &opt->md5;
+    static t_bool (*process[3])(char const *, t_opt_md5 const *) = {
+        process_md5_file, process_md5_str, process_md5_stdin
+    };
 
     while (ptr->queue->size) {
         t_input *in = t_queue_pop_front(ptr->queue);
 
-        switch (in->access) {
-            case STDIN:
-                if (process_md5_stdin(ptr)) {
-                    process_exit_md5(in, opt->md5.queue);
-                }
-                break;
-            case STRING:
-                if (process_md5_str(in->ptr, ptr)) {
-                    process_exit_md5(in, opt->md5.queue);
-                }
-                break;
-            case FILES:
-                if (process_md5_file(in->ptr, ptr)) {
-                    process_exit_md5(in, opt->md5.queue);
-                }
-                break;
+        if ((*process[in->access])(in->ptr, ptr)) {
+            process_exit_md5(in, opt->md5.queue);
         }
         free(in);
     }

@@ -1,12 +1,6 @@
 #include "md5.h"
 #include "md5_impl.h"
 
-static inline uint32_t
-left_rotate(uint32_t val, uint32_t shift)
-{
-    return ((val << shift) | (val >> (32 - shift)));
-}
-
 static void
 md5_compute_chunk(t_md5_digest *digest, t_md5_chunk const *chunk)
 {
@@ -32,7 +26,7 @@ md5_compute_chunk(t_md5_digest *digest, t_md5_chunk const *chunk)
         tmp.a = tmp.d;
         tmp.d = tmp.c;
         tmp.c = tmp.b;
-        tmp.b += left_rotate(f, g_md5_constants.s[i]);
+        tmp.b += left_rotate_32(f, g_md5_constants.s[i]);
     }
     digest->a += tmp.a;
     digest->b += tmp.b;
