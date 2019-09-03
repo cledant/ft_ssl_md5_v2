@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define SHA256_CHUNK_SIZE 64
 #define SHA256_CHUNK_UINT_TAB_SIZE 16
@@ -28,6 +29,9 @@ typedef struct s_sha256_digest
 } t_sha256_digest;
 
 // sha256_compute.c
+void sha256_compute_digest_from_fd(t_sha256_digest *digest,
+                                   int32_t fd,
+                                   t_queue *string_chunk);
 void sha256_compute_digest_from_str(t_sha256_digest *digest,
                                     uint8_t const *str);
 

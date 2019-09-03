@@ -53,14 +53,14 @@ sha256_compute_chunk(t_sha256_digest *digest, t_sha256_chunk *chunk)
 
 static void
 sha256_compute_last_chunck(t_sha256_digest *digest,
-                        uint64_t total_len,
-                        uint8_t const *str,
-                        uint64_t len_str,
-                        uint64_t offset_str)
+                           uint64_t total_len,
+                           uint8_t const *str,
+                           uint64_t len_str,
+                           uint64_t offset_str)
 {
     uint8_t last_chunk[SHA256_CHUNK_SIZE] = { 0 };
     uint8_t append_chunk[SHA256_CHUNK_SIZE] = { 0 };
-    uint64_t len_str_in_bit = total_len * 8;
+    uint64_t len_str_in_bit = swap_endianness_64(total_len * 8);
     uint64_t last_chunk_size = total_len % SHA256_CHUNK_SIZE;
 
     memcpy(last_chunk, str + offset_str, last_chunk_size);
@@ -78,6 +78,43 @@ sha256_compute_last_chunck(t_sha256_digest *digest,
     if (last_chunk_size > SHA256_MAX_LAST_CHUNK) {
         sha256_compute_chunk(digest, (t_sha256_chunk *)append_chunk);
     }
+}
+
+void
+sha256_compute_digest_from_fd(t_sha256_digest *digest,
+                              int32_t fd,
+                              t_queue *string_chunk)
+{
+    uint8_t read_buff[SHA256_CHUNK_SIZE] = { 0 };
+    uint8_t buff[SHA256_CHUNK_SIZE] = { 0 };
+    t_byte_array wrapped_buff;
+    uint64_t read_char = 0;
+    uint64_t total_append_char = 0;
+
+    t_byte_array_init(&wrapped_buff, buff, SHA256_CHUNK_SIZE);
+    while ((read_char = read(fd, read_buff, SHA256_CHUNK_SIZE))) {
+        uint64_t append_char = 0;
+
+        while (append_char != read_char) {
+            t_byte_array_append_no_resize(
+              &wrapped_buff, read_buff + append_char, read_char, &append_char);
+            total_append_char += append_char;
+            if (!t_byte_array_get_free_space(&wrapped_buff)) {
+                sha256_compute_chunk(digest,
+                                     (t_sha256_chunk *)wrapped_buff.data);
+                if (string_chunk) {
+                    t_queue_push_back(string_chunk,
+                                      t_byte_array_copy(&wrapped_buff));
+                }
+                t_byte_array_clear(&wrapped_buff);
+            }
+        }
+    }
+    if (string_chunk) {
+        t_queue_push_back(string_chunk, t_byte_array_copy(&wrapped_buff));
+    }
+    sha256_compute_last_chunck(
+      digest, total_append_char, wrapped_buff.data, wrapped_buff.len, 0);
 }
 
 void
