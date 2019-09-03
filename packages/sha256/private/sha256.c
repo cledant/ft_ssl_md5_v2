@@ -10,8 +10,7 @@ sha256_get_hash(int32_t fd, uint8_t const *str, t_queue *string_chunk)
     if (fd >= 0) {
         sha256_compute_digest_from_fd(&digest, fd, string_chunk);
         return (sha256_digest_to_string(&digest));
-    }
-    else if (str) {
+    } else if (str) {
         sha256_compute_digest_from_str(&digest, str);
         return (sha256_digest_to_string(&digest));
     }

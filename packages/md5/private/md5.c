@@ -9,8 +9,7 @@ md5_get_hash(int32_t fd, uint8_t const *str, t_queue *string_chunk)
     if (fd >= 0) {
         md5_compute_digest_from_fd(&digest, fd, string_chunk);
         return (md5_digest_to_string(&digest));
-    }
-    else if (str) {
+    } else if (str) {
         md5_compute_digest_from_str(&digest, str);
         return (md5_digest_to_string(&digest));
     }

@@ -1,9 +1,9 @@
 #ifndef ARGS_PROCESSING_IMPL_H
 #define ARGS_PROCESSING_IMPL_H
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include "md5.h"
