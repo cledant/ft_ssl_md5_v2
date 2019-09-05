@@ -130,7 +130,7 @@ t_string_append_len(t_string *string, char const *str, uint64_t len)
         string->str = new_str;
         string->allocated_len = new_alloc_len;
     }
-    strncat(string->str, str, len);
+    strlcat(string->str, str, len + 1);
     string->len += len;
     return (string);
 }
@@ -149,7 +149,7 @@ t_string_append_no_resize(t_string *string,
     if (free_space < to_cpy) {
         to_cpy = free_space;
     }
-    strncat(string->str, str, to_cpy);
+    strlcat(string->str, str, to_cpy + 1);
     string->len += to_cpy;
     if (appended_len) {
         *appended_len = to_cpy;

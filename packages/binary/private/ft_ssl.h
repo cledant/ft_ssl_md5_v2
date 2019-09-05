@@ -15,8 +15,4 @@ typedef struct s_env
     t_opt opt;
 } t_env;
 
-// debug.c
-void debug_print_args(t_env *e);
-void debug_print_input(void *queue_data, void *data);
-
 #endif

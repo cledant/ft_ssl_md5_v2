@@ -1,40 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.1)
 project(ft_ssl_md5)
 
-#Setup binary compilation
+add_subdirectory(packages/container)
+add_subdirectory(packages/md5)
+add_subdirectory(packages/sha256)
+add_subdirectory(packages/args_processing)
+add_subdirectory(packages/args_parsing)
+add_subdirectory(packages/shared_types)
+
 add_executable(ft_ssl
-		packages/binary/private/ft_ssl.c
-		packages/binary/private/debug.c
-		packages/container/private/t_queue.c
-		packages/container/private/t_list.c
-		packages/md5/private/md5.c
-		packages/args_parsing/private/opt_md5.c
-		packages/args_parsing/private/opt_sha256.c
-		packages/args_parsing/private/display.c
-		packages/args_parsing/private/utility.c
-		packages/args_processing/private/process_md5.c
-		packages/args_processing/private/process_sha256.c
-		packages/container/private/t_string.c
-		packages/md5/private/md5_utility.c
-		packages/container/private/t_byte_array.c
-		packages/md5/private/md5_compute.c
-		packages/args_processing/private/utility.c
-		packages/sha256/private/sha256.c
-		packages/container/private/endianness.c
-		packages/sha256/private/sha256_utility.c
-		packages/container/private/rotate_data.c
-		packages/sha256/private/sha256_compute.c)
+		packages/binary/private/ft_ssl.c)
 target_include_directories(ft_ssl PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/packages/shared_types/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/binary/private
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/args_parsing/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/args_parsing/private
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/args_processing/private
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/args_processing/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/container/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/container/private
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/md5/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/md5/private
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/sha256/public
-		${CMAKE_CURRENT_SOURCE_DIR}/packages/sha256/private)
+		${CMAKE_CURRENT_SOURCE_DIR}/packages/binary/private)
+add_dependencies(ft_ssl args_parsing args_processing container md5 sha256)
+target_link_libraries(ft_ssl args_parsing args_processing container md5 sha256 bsd)
 target_compile_options(ft_ssl PRIVATE -Wall -Wextra -Werror -std=gnu11 -march=native -flto)

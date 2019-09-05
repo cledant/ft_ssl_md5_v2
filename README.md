@@ -9,9 +9,9 @@ You may compile `ft_ssl` by running `cmake`.
 ## Usage  
 
 Usage: ft_ssl command \[command options\] \[command args\]  
-* Available commands:
-    * md5  
-	* sha256  
+* Available commands :  
+```md5```  
+```sha256```  
 
 ## Md5 options
 
