@@ -4,9 +4,9 @@
 static void
 sha256_setup_w(uint32_t *w)
 {
-    for (size_t i = 0; i < 16; i++)
+    for (uint8_t i = 0; i < 16; ++i)
         w[i] = swap_endianness_32(w[i]);
-    for (size_t i = 16; i < 64; i++) {
+    for (uint8_t i = 16; i < 64; ++i) {
         uint32_t s0 = right_rotate_32(w[i - 15], 7) ^
                       right_rotate_32(w[i - 15], 18) ^ (w[i - 15] >> 3);
         uint32_t s1 = right_rotate_32(w[i - 2], 17) ^
@@ -23,7 +23,7 @@ sha256_compute_chunk(t_sha256_digest *digest, t_sha256_chunk *chunk)
 
     memcpy(w, chunk, SHA256_CHUNK_SIZE);
     sha256_setup_w(w);
-    for (size_t i = 0; i < 64; ++i) {
+    for (uint8_t i = 0; i < 64; ++i) {
         uint32_t S1 = right_rotate_32(tmp.e, 6) ^ right_rotate_32(tmp.e, 11) ^
                       right_rotate_32(tmp.e, 25);
         uint32_t ch = (tmp.e & tmp.f) ^ ((~tmp.e) & tmp.g);

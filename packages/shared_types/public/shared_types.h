@@ -43,7 +43,7 @@ typedef struct s_opt_sha256
     t_queue *queue;
 } t_opt_sha256;
 
-typedef union s_opt
+typedef union u_opt
 {
     t_opt_md5 md5;
     t_opt_sha256 sha256;

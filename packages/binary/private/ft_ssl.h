@@ -1,5 +1,5 @@
-#ifndef FT_SSL
-#define FT_SSL
+#ifndef FT_SSL_H
+#define FT_SSL_H
 
 #include <stdio.h>
 #include <string.h>
