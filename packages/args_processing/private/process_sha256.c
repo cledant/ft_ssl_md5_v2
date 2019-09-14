@@ -27,6 +27,7 @@ process_sha256_stdin(char const *unused, t_opt_sha256 const *opt)
     if (opt->echo) {
         if (queue) {
             t_queue_foreach(queue, display_string_chunk, NULL);
+            t_queue_deep_delete(queue, delete_byte_array);
         }
     }
     puts(hash->str);

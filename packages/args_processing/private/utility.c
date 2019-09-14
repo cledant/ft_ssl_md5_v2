@@ -9,3 +9,9 @@ display_string_chunk(void *string_chunk, void *data)
 
     write(1, ba->data, ba->len);
 }
+
+void
+delete_byte_array(void *data)
+{
+    t_byte_array_delete(data, TRUE);
+}

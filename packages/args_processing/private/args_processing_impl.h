@@ -10,5 +10,6 @@
 #include "sha256.h"
 
 void display_string_chunk(void *string_chunk, void *data);
+void delete_byte_array(void *data);
 
 #endif

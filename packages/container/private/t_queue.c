@@ -135,8 +135,10 @@ t_queue_pop_back(t_queue *queue)
 void
 t_queue_foreach(t_queue *queue, void (*func)(void *, void *), void *data)
 {
-    while (queue->begin) {
-        (*func)(queue->begin->data, data);
-        queue->begin = queue->begin->next;
+    t_list *it = queue->begin;
+
+    while (it) {
+        (*func)(it->data, data);
+        it = it->next;
     }
 }
