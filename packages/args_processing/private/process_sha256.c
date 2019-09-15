@@ -48,6 +48,7 @@ process_sh256_file(char const *filesname, t_opt_sha256 const *opt)
 
     if (!hash) {
         puts("ft_ssl: failed to alloc memory");
+        close(fd);
         return (TRUE);
     }
     if (opt->quiet) {
@@ -58,6 +59,7 @@ process_sh256_file(char const *filesname, t_opt_sha256 const *opt)
         printf("SHA256 (%s) = %s\n", filesname, hash->str);
     }
     t_string_delete((t_string *)hash, TRUE);
+    close(fd);
     return (FALSE);
 }
 

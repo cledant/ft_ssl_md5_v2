@@ -48,6 +48,7 @@ process_md5_file(char const *filesname, t_opt_md5 const *opt)
 
     if (!hash) {
         puts("ft_ssl: failed to alloc memory");
+        close(fd);
         return (TRUE);
     }
     if (opt->quiet) {
@@ -58,6 +59,7 @@ process_md5_file(char const *filesname, t_opt_md5 const *opt)
         printf("MD5 (%s) = %s\n", filesname, hash->str);
     }
     t_string_delete((t_string *)hash, TRUE);
+    close(fd);
     return (FALSE);
 }
 
